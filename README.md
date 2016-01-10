@@ -20,43 +20,43 @@ También podemos encapsular una aplicación hecha en C/C++ para, por ejemplo, de
 ##Un ejemplo simple
 Para empezar vamos a hacer un ejemplo simple como puede ser la sucesión de Fibonacci de forma recursiva.
 Vamos a crear una función de Fibonacci de tres maneras diferentes:
-En Python normal
-En Cython (Python compilado)
-En C/C++
+* En Python normal
+* En Cython (Python compilado)
+* En C/C++
 Por último vamos a hacer una comparación de tiempos entre las distintas funciones.
 
 ###Creación de ficheros
 ####fibonacciPython.py (Python normal)
-def fibonacciRec(n):
-	if n==0:
-    		return 0
-	elif n==1:
-	  	return 1
-	else:
-		return fibonacciRec(n-2) + fibonacciRec(n-1)
+    def fibonacciRec(n):
+        if n==0:
+            return 0
+        elif n==1:
+            return 1
+        else:
+            return fibonacciRec(n-2) + fibonacciRec(n-1)
 
 ####fibonacciCython.pyx (Cython)
-def fibonacciRec(n):
-	if n==0:
-    		return 0
-		elif n==1:
-		  	return 1
-	else:
-		return fibonacciRec(n-2) + fibonacciRec(n-1)
+    def fibonacciRec(n):
+        if n==0:
+            return 0
+        elif n==1:
+            return 1
+        else:
+            return fibonacciRec(n-2) + fibonacciRec(n-1)
 
 ####fibonacci.cpp (C/C++)
-int fibonacciRec(int n){
-	if (n==0)
-	    	return 0;
-	else if (n==1)
-	    	return 1;
-	else
-    		return fibonacciRec(n-2) + fibonacciRec(n-1);
-}
+    int fibonacciRec(int n){
+        if (n==0)
+            return 0;
+        else if (n==1)
+            return 1;
+        else
+            return fibonacciRec(n-2) + fibonacciRec(n-1);
+    }
 
-extern "C" {
-    int fibonacciRecC(int n){return fibonacciRec(n);}
-}
+    extern "C" {
+        int fibonacciRecC(int n){return fibonacciRec(n);}
+    }
 
 
 ##Aclaraciones
@@ -73,51 +73,52 @@ Lo único que tenemos que hacer es llamar a dicho script de la siguiente manera:
 	python3 setup.py build_ext --inplace #Python3
 
 ###Script de configuración
-from distutils.core import setup
-from Cython.Build import cythonize
-import glob, os
-files = []
-os.chdir(".")
+    from distutils.core import setup
+    from Cython.Build import cythonize
+    import glob, os
+    files = []
+    os.chdir(".")
 
-for file in glob.glob("*.pyx"):
-	files.append(file)
-setup(
-	ext_modules = cythonize(files)
-)
+    for file in glob.glob("*.pyx"):
+        files.append(file)
+    
+    setup(
+        ext_modules = cythonize(files)
+    )
 
 ##Uso de Cython
 Una vez generado el código objeto, hacer uso de las funciones que haya en el fichero .pyx
-Para ello necesitamos importar el módulo y ya podemos usarlas:
+####Para ello necesitamos importar el módulo y ya podemos usarlas
 	import fibonacciCython #importa el archivo “fibonacciCython.so”
 	print(fibonacciCython.fibonacciRec(5)) #se hace uso de la función fibonacciRec
 
 ###Compilación de C/C++ para el uso con Python 
-Una vez creado el archivo C/C++ con las funciones que se quieran usar en Python especificadas para que se vinculen externamente, podemos proceder a compilarlo:
+####Una vez creado el archivo C/C++ con las funciones que se quieran usar en Python especificadas para que se vinculen externamente, podemos proceder a compilarlo
 	g++ -c -fPIC fibonacci.cpp -o fibonacci.o
 	g++ -shared -Wl,-soname,libfibonacci.so -o libfibonacci.so  fibonacci.o
 Con esto hemos creado el archivo .so necesario para trabajar en Python.
 
 ###Uso de C/C++ en Python
-Una vez generado el archivo .so, en nuestro caso libfibonacci.so, podemos usar las funciones externalizadas de la siguiente manera:
-	from ctypes import cdll #importamos cdll para cargar bibliotecas de C/C++
-	libfi = cdll.LoadLibrary('./libfibonacci.so') #cargamos la biblioteca en libfi
-print(libfi.fibonacciRecC(5)) #usamos las funciones de dicha biblioteca
+####Una vez generado el archivo .so, en nuestro caso libfibonacci.so, podemos usar las funciones externalizadas de la siguiente manera
+    from ctypes import cdll #importamos cdll para cargar bibliotecas de C/C++
+    libfi = cdll.LoadLibrary('./libfibonacci.so') #cargamos la biblioteca en libfi
+    print(libfi.fibonacciRecC(5)) #usamos las funciones de dicha biblioteca
 
 ##Comparativa de funciones
-Para saber si Cython realmente merece la pena, hemos comparado los tiempos de ejecución para distintos tamaños de n:
-| N  | Python   | Cython   | C/C++   |
-|----|----------|----------|---------|
-| 39 | 29.1104  | 18.1274  | 0.8510  |
-| 40 | 47.2322  | 29.4395  | 1.4826  |
-| 41 | 76.4090  | 47.3236  | 2.4527  |
-| 42 | 123.7818 | 75.5095  | 3.8937  |
-| 43 | 202.2534 | 123.7621 | 6.1991  |
-| 44 | 327.2314 | 199.7456 | 9.9453  |
-| 45 | 529.8116 | 364.6818 | 15.9019 |
+####Para saber si Cython realmente merece la pena, hemos comparado los tiempos de ejecución para distintos tamaños de n
+    | N  | Python   | Cython   | C/C++   |
+    |----|----------|----------|---------|
+    | 39 | 29.1104  | 18.1274  | 0.8510  |
+    | 40 | 47.2322  | 29.4395  | 1.4826  |
+    | 41 | 76.4090  | 47.3236  | 2.4527  |
+    | 42 | 123.7818 | 75.5095  | 3.8937  |
+    | 43 | 202.2534 | 123.7621 | 6.1991  |
+    | 44 | 327.2314 | 199.7456 | 9.9453  |
+    | 45 | 529.8116 | 364.6818 | 15.9019 |
 
 ##Para terminar
 Desde Cython se puede hacer llamadas a funciones de C/C++:
-cythonC.pyx
+####cythonC.pyx
 	from libc.stdlib cimport atoi
 	cdef parse_charptr_to_py_int(char* s):
 		assert s is not NULL, "string is NULL"
@@ -128,6 +129,6 @@ cythonC.pyx
 Usándose de igual manera que un .pyx normal.
 
 ##Enlaces de interés
-http://docs.cython.org/src/tutorial/cython_tutorial.html
-http://docs.cython.org/src/userguide/language_basics.html
-http://docs.cython.org/src/userguide/wrapping_CPlusPlus.html
+* http://docs.cython.org/src/tutorial/cython_tutorial.html
+* http://docs.cython.org/src/userguide/language_basics.html
+* http://docs.cython.org/src/userguide/wrapping_CPlusPlus.html
