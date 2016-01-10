@@ -68,11 +68,14 @@ sudo apt-get install cython3 libpython3.4-dev # Para Python3
 <a id="un-ejemplo-simple" class="anchor" href="#un-ejemplo-simple" aria-hidden="true"><span class="octicon octicon-link"></span></a>Un ejemplo simple</h2>
 
 <p>Para empezar vamos a hacer un ejemplo simple como puede ser la sucesión de Fibonacci de forma recursiva.
-Vamos a crear una función de Fibonacci de tres maneras diferentes:
-En Python normal
-En Cython (Python compilado)
-En C/C++
-Por último vamos a hacer una comparación de tiempos entre las distintas funciones.</p>
+Vamos a crear una función de Fibonacci de tres maneras diferentes:</p>
+
+<ul>
+<li>En Python normal</li>
+<li>En Cython (Python compilado)</li>
+<li>En C/C++
+Por último vamos a hacer una comparación de tiempos entre las distintas funciones.</li>
+</ul>
 
 <h3>
 <a id="creación-de-ficheros" class="anchor" href="#creaci%C3%B3n-de-ficheros" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creación de ficheros</h3>
@@ -80,40 +83,43 @@ Por último vamos a hacer una comparación de tiempos entre las distintas funcio
 <h4>
 <a id="fibonaccipythonpy-python-normal" class="anchor" href="#fibonaccipythonpy-python-normal" aria-hidden="true"><span class="octicon octicon-link"></span></a>fibonacciPython.py (Python normal)</h4>
 
-<p>def fibonacciRec(n):
+<pre><code>def fibonacciRec(n):
     if n==0:
-            return 0
+        return 0
     elif n==1:
         return 1
     else:
-        return fibonacciRec(n-2) + fibonacciRec(n-1)</p>
+        return fibonacciRec(n-2) + fibonacciRec(n-1)
+</code></pre>
 
 <h4>
 <a id="fibonaccicythonpyx-cython" class="anchor" href="#fibonaccicythonpyx-cython" aria-hidden="true"><span class="octicon octicon-link"></span></a>fibonacciCython.pyx (Cython)</h4>
 
-<p>def fibonacciRec(n):
+<pre><code>def fibonacciRec(n):
     if n==0:
-            return 0
-        elif n==1:
-            return 1
+        return 0
+    elif n==1:
+        return 1
     else:
-        return fibonacciRec(n-2) + fibonacciRec(n-1)</p>
+        return fibonacciRec(n-2) + fibonacciRec(n-1)
+</code></pre>
 
 <h4>
 <a id="fibonaccicpp-cc" class="anchor" href="#fibonaccicpp-cc" aria-hidden="true"><span class="octicon octicon-link"></span></a>fibonacci.cpp (C/C++)</h4>
 
-<p>int fibonacciRec(int n){
+<pre><code>int fibonacciRec(int n){
     if (n==0)
-            return 0;
+        return 0;
     else if (n==1)
-            return 1;
+        return 1;
     else
-            return fibonacciRec(n-2) + fibonacciRec(n-1);
-}</p>
+        return fibonacciRec(n-2) + fibonacciRec(n-1);
+}
 
-<p>extern "C" {
+extern "C" {
     int fibonacciRecC(int n){return fibonacciRec(n);}
-}</p>
+}
+</code></pre>
 
 <h2>
 <a id="aclaraciones" class="anchor" href="#aclaraciones" aria-hidden="true"><span class="octicon octicon-link"></span></a>Aclaraciones</h2>
@@ -135,47 +141,62 @@ Lo único que tenemos que hacer es llamar a dicho script de la siguiente manera:
 <h3>
 <a id="script-de-configuración" class="anchor" href="#script-de-configuraci%C3%B3n" aria-hidden="true"><span class="octicon octicon-link"></span></a>Script de configuración</h3>
 
-<p>from distutils.core import setup
+<pre><code>from distutils.core import setup
 from Cython.Build import cythonize
 import glob, os
 files = []
-os.chdir(".")</p>
+os.chdir(".")
 
-<p>for file in glob.glob("*.pyx"):
+for file in glob.glob("*.pyx"):
     files.append(file)
+
 setup(
     ext_modules = cythonize(files)
-)</p>
+)
+</code></pre>
 
 <h2>
 <a id="uso-de-cython" class="anchor" href="#uso-de-cython" aria-hidden="true"><span class="octicon octicon-link"></span></a>Uso de Cython</h2>
 
-<p>Una vez generado el código objeto, hacer uso de las funciones que haya en el fichero .pyx
-Para ello necesitamos importar el módulo y ya podemos usarlas:
-    import fibonacciCython #importa el archivo “fibonacciCython.so”
-    print(fibonacciCython.fibonacciRec(5)) #se hace uso de la función fibonacciRec</p>
+<p>Una vez generado el código objeto, hacer uso de las funciones que haya en el fichero .pyx</p>
+
+<h4>
+<a id="para-ello-necesitamos-importar-el-módulo-y-ya-podemos-usarlas" class="anchor" href="#para-ello-necesitamos-importar-el-m%C3%B3dulo-y-ya-podemos-usarlas" aria-hidden="true"><span class="octicon octicon-link"></span></a>Para ello necesitamos importar el módulo y ya podemos usarlas</h4>
+
+<pre><code>import fibonacciCython #importa el archivo “fibonacciCython.so”
+print(fibonacciCython.fibonacciRec(5)) #se hace uso de la función fibonacciRec
+</code></pre>
 
 <h3>
 <a id="compilación-de-cc-para-el-uso-con-python" class="anchor" href="#compilaci%C3%B3n-de-cc-para-el-uso-con-python" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compilación de C/C++ para el uso con Python</h3>
 
-<p>Una vez creado el archivo C/C++ con las funciones que se quieran usar en Python especificadas para que se vinculen externamente, podemos proceder a compilarlo:
-    g++ -c -fPIC fibonacci.cpp -o fibonacci.o
-    g++ -shared -Wl,-soname,libfibonacci.so -o libfibonacci.so  fibonacci.o
-Con esto hemos creado el archivo .so necesario para trabajar en Python.</p>
+<h4>
+<a id="una-vez-creado-el-archivo-cc-con-las-funciones-que-se-quieran-usar-en-python-especificadas-para-que-se-vinculen-externamente-podemos-proceder-a-compilarlo" class="anchor" href="#una-vez-creado-el-archivo-cc-con-las-funciones-que-se-quieran-usar-en-python-especificadas-para-que-se-vinculen-externamente-podemos-proceder-a-compilarlo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Una vez creado el archivo C/C++ con las funciones que se quieran usar en Python especificadas para que se vinculen externamente, podemos proceder a compilarlo</h4>
+
+<pre><code>g++ -c -fPIC fibonacci.cpp -o fibonacci.o
+g++ -shared -Wl,-soname,libfibonacci.so -o libfibonacci.so  fibonacci.o
+</code></pre>
+
+<p>Con esto hemos creado el archivo .so necesario para trabajar en Python.</p>
 
 <h3>
 <a id="uso-de-cc-en-python" class="anchor" href="#uso-de-cc-en-python" aria-hidden="true"><span class="octicon octicon-link"></span></a>Uso de C/C++ en Python</h3>
 
-<p>Una vez generado el archivo .so, en nuestro caso libfibonacci.so, podemos usar las funciones externalizadas de la siguiente manera:
-    from ctypes import cdll #importamos cdll para cargar bibliotecas de C/C++
-    libfi = cdll.LoadLibrary('./libfibonacci.so') #cargamos la biblioteca en libfi
-print(libfi.fibonacciRecC(5)) #usamos las funciones de dicha biblioteca</p>
+<h4>
+<a id="una-vez-generado-el-archivo-so-en-nuestro-caso-libfibonacciso-podemos-usar-las-funciones-externalizadas-de-la-siguiente-manera" class="anchor" href="#una-vez-generado-el-archivo-so-en-nuestro-caso-libfibonacciso-podemos-usar-las-funciones-externalizadas-de-la-siguiente-manera" aria-hidden="true"><span class="octicon octicon-link"></span></a>Una vez generado el archivo .so, en nuestro caso libfibonacci.so, podemos usar las funciones externalizadas de la siguiente manera</h4>
+
+<pre><code>from ctypes import cdll #importamos cdll para cargar bibliotecas de C/C++
+libfi = cdll.LoadLibrary('./libfibonacci.so') #cargamos la biblioteca en libfi
+print(libfi.fibonacciRecC(5)) #usamos las funciones de dicha biblioteca
+</code></pre>
 
 <h2>
 <a id="comparativa-de-funciones" class="anchor" href="#comparativa-de-funciones" aria-hidden="true"><span class="octicon octicon-link"></span></a>Comparativa de funciones</h2>
 
-<p>Para saber si Cython realmente merece la pena, hemos comparado los tiempos de ejecución para distintos tamaños de n:
-| N  | Python   | Cython   | C/C++   |
+<h4>
+<a id="para-saber-si-cython-realmente-merece-la-pena-hemos-comparado-los-tiempos-de-ejecución-para-distintos-tamaños-de-n" class="anchor" href="#para-saber-si-cython-realmente-merece-la-pena-hemos-comparado-los-tiempos-de-ejecuci%C3%B3n-para-distintos-tama%C3%B1os-de-n" aria-hidden="true"><span class="octicon octicon-link"></span></a>Para saber si Cython realmente merece la pena, hemos comparado los tiempos de ejecución para distintos tamaños de n</h4>
+
+<pre><code>| N  | Python   | Cython   | C/C++   |
 |----|----------|----------|---------|
 | 39 | 29.1104  | 18.1274  | 0.8510  |
 | 40 | 47.2322  | 29.4395  | 1.4826  |
@@ -183,28 +204,35 @@ print(libfi.fibonacciRecC(5)) #usamos las funciones de dicha biblioteca</p>
 | 42 | 123.7818 | 75.5095  | 3.8937  |
 | 43 | 202.2534 | 123.7621 | 6.1991  |
 | 44 | 327.2314 | 199.7456 | 9.9453  |
-| 45 | 529.8116 | 364.6818 | 15.9019 |</p>
+| 45 | 529.8116 | 364.6818 | 15.9019 |
+</code></pre>
 
 <h2>
 <a id="para-terminar" class="anchor" href="#para-terminar" aria-hidden="true"><span class="octicon octicon-link"></span></a>Para terminar</h2>
 
-<p>Desde Cython se puede hacer llamadas a funciones de C/C++:
-cythonC.pyx
-    from libc.stdlib cimport atoi
-    cdef parse_charptr_to_py_int(char* s):
-        assert s is not NULL, "string is NULL"
-        return atoi(s)
-    def string_to_int(n):
-        return parse_charptr_to_py_int(n)</p>
+<p>Desde Cython se puede hacer llamadas a funciones de C/C++:</p>
+
+<h4>
+<a id="cythoncpyx" class="anchor" href="#cythoncpyx" aria-hidden="true"><span class="octicon octicon-link"></span></a>cythonC.pyx</h4>
+
+<pre><code>from libc.stdlib cimport atoi
+cdef parse_charptr_to_py_int(char* s):
+    assert s is not NULL, "string is NULL"
+    return atoi(s)
+def string_to_int(n):
+    return parse_charptr_to_py_int(n)
+</code></pre>
 
 <p>Usándose de igual manera que un .pyx normal.</p>
 
 <h2>
 <a id="enlaces-de-interés" class="anchor" href="#enlaces-de-inter%C3%A9s" aria-hidden="true"><span class="octicon octicon-link"></span></a>Enlaces de interés</h2>
 
-<p><a href="http://docs.cython.org/src/tutorial/cython_tutorial.html">http://docs.cython.org/src/tutorial/cython_tutorial.html</a>
-<a href="http://docs.cython.org/src/userguide/language_basics.html">http://docs.cython.org/src/userguide/language_basics.html</a>
-<a href="http://docs.cython.org/src/userguide/wrapping_CPlusPlus.html">http://docs.cython.org/src/userguide/wrapping_CPlusPlus.html</a></p>
+<ul>
+<li><a href="http://docs.cython.org/src/tutorial/cython_tutorial.html">http://docs.cython.org/src/tutorial/cython_tutorial.html</a></li>
+<li><a href="http://docs.cython.org/src/userguide/language_basics.html">http://docs.cython.org/src/userguide/language_basics.html</a></li>
+<li><a href="http://docs.cython.org/src/userguide/wrapping_CPlusPlus.html">http://docs.cython.org/src/userguide/wrapping_CPlusPlus.html</a></li>
+</ul>
       </section>
     </div>
 
