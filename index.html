@@ -1,25 +1,37 @@
 <!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="UTF-8">
-    <title>Cython by kcobos</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-  </head>
-  <body>
-    <section class="page-header">
-      <h1 class="project-name">Cython</h1>
-      <h2 class="project-tagline">Comparativa de Cython y primeros pasos</h2>
-      <a href="https://github.com/kcobos/Cython" class="btn">View on GitHub</a>
-      <a href="https://github.com/kcobos/Cython/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/kcobos/Cython/tarball/master" class="btn">Download .tar.gz</a>
-    </section>
+<html>
 
-    <section class="main-content">
-      <h1>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Cython : Comparativa de Cython y primeros pasos">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Cython</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/kcobos/Cython">View on GitHub</a>
+
+          <h1 id="project_title">Cython</h1>
+          <h2 id="project_tagline">Comparativa de Cython y primeros pasos</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/kcobos/Cython/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/kcobos/Cython/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
 <a id="cython" class="anchor" href="#cython" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cython</h1>
 
 <h2>
@@ -74,26 +86,24 @@ Por último vamos a hacer una comparación de tiempos entre las distintas funcio
 <h4>
 <a id="fibonaccipythonpy-python-normal" class="anchor" href="#fibonaccipythonpy-python-normal" aria-hidden="true"><span class="octicon octicon-link"></span></a>fibonacciPython.py (Python normal)</h4>
 
-<pre><code>def fibonacciRec(n):
-    if n==0:
-        return 0
-    elif n==1:
-        return 1
-    else:
-        return fibonacciRec(n-2) + fibonacciRec(n-1)
-</code></pre>
+<div class="highlight highlight-source-python"><pre>    <span class="pl-k">def</span> <span class="pl-en">fibonacciRec</span>(<span class="pl-smi">n</span>):
+        <span class="pl-k">if</span> n<span class="pl-k">==</span><span class="pl-c1">0</span>:
+            <span class="pl-k">return</span> <span class="pl-c1">0</span>
+        <span class="pl-k">elif</span> n<span class="pl-k">==</span><span class="pl-c1">1</span>:
+            <span class="pl-k">return</span> <span class="pl-c1">1</span>
+        <span class="pl-k">else</span>:
+            <span class="pl-k">return</span> fibonacciRec(n<span class="pl-k">-</span><span class="pl-c1">2</span>) <span class="pl-k">+</span> fibonacciRec(n<span class="pl-k">-</span><span class="pl-c1">1</span>)</pre></div>
 
 <h4>
 <a id="fibonaccicythonpyx-cython" class="anchor" href="#fibonaccicythonpyx-cython" aria-hidden="true"><span class="octicon octicon-link"></span></a>fibonacciCython.pyx (Cython)</h4>
 
-<pre><code>def fibonacciRec(n):
-    if n==0:
-        return 0
-    elif n==1:
-        return 1
-    else:
-        return fibonacciRec(n-2) + fibonacciRec(n-1)
-</code></pre>
+<div class="highlight highlight-source-python"><pre>    <span class="pl-k">def</span> <span class="pl-en">fibonacciRec</span>(<span class="pl-smi">n</span>):
+        <span class="pl-k">if</span> n<span class="pl-k">==</span><span class="pl-c1">0</span>:
+            <span class="pl-k">return</span> <span class="pl-c1">0</span>
+        <span class="pl-k">elif</span> n<span class="pl-k">==</span><span class="pl-c1">1</span>:
+            <span class="pl-k">return</span> <span class="pl-c1">1</span>
+        <span class="pl-k">else</span>:
+            <span class="pl-k">return</span> fibonacciRec(n<span class="pl-k">-</span><span class="pl-c1">2</span>) <span class="pl-k">+</span> fibonacciRec(n<span class="pl-k">-</span><span class="pl-c1">1</span>)</pre></div>
 
 <h4>
 <a id="fibonaccicpp-cc" class="anchor" href="#fibonaccicpp-cc" aria-hidden="true"><span class="octicon octicon-link"></span></a>fibonacci.cpp (C/C++)</h4>
@@ -139,40 +149,35 @@ python3 setup.py build_ext --inplace #Python3
 <h3>
 <a id="script-de-configuración" class="anchor" href="#script-de-configuraci%C3%B3n" aria-hidden="true"><span class="octicon octicon-link"></span></a>Script de configuración</h3>
 
-<pre><code>from distutils.core import setup
-from Cython.Build import cythonize
-import glob, os
-files = []
-os.chdir(".")
+<div class="highlight highlight-source-python"><pre>    <span class="pl-k">from</span> distutils.core <span class="pl-k">import</span> setup
+    <span class="pl-k">from</span> Cython.Build <span class="pl-k">import</span> cythonize
+    <span class="pl-k">import</span> glob, os
+    files <span class="pl-k">=</span> []
+    os.chdir(<span class="pl-s"><span class="pl-pds">"</span>.<span class="pl-pds">"</span></span>)
 
-for file in glob.glob("*.pyx"):
-    files.append(file)
+    <span class="pl-k">for</span> <span class="pl-c1">file</span> <span class="pl-k">in</span> glob.glob(<span class="pl-s"><span class="pl-pds">"</span>*.pyx<span class="pl-pds">"</span></span>):
+        files.append(<span class="pl-c1">file</span>)
 
-setup(
-    ext_modules = cythonize(files)
-)
-</code></pre>
+    setup(
+        <span class="pl-smi">ext_modules</span> <span class="pl-k">=</span> cythonize(files)
+    )</pre></div>
 
 <h2>
 <a id="uso-de-cython" class="anchor" href="#uso-de-cython" aria-hidden="true"><span class="octicon octicon-link"></span></a>Uso de Cython</h2>
 
-<p>Una vez generado el código objeto, hacer uso de las funciones que haya en el fichero .pyx</p>
+<p>Una vez generado el código objeto, hacer uso de las funciones que haya en el fichero .pyx
+Para ello necesitamos importar el módulo y ya podemos usarlas:</p>
 
-<h4>
-<a id="para-ello-necesitamos-importar-el-módulo-y-ya-podemos-usarlas" class="anchor" href="#para-ello-necesitamos-importar-el-m%C3%B3dulo-y-ya-podemos-usarlas" aria-hidden="true"><span class="octicon octicon-link"></span></a>Para ello necesitamos importar el módulo y ya podemos usarlas:</h4>
-
-<pre><code>import fibonacciCython #importa el archivo “fibonacciCython.so”
-print(fibonacciCython.fibonacciRec(5)) #se hace uso de la función fibonacciRec
-</code></pre>
+<div class="highlight highlight-source-python"><pre>    <span class="pl-k">import</span> fibonacciCython <span class="pl-c">#importa el archivo “fibonacciCython.so”</span>
+    <span class="pl-k">print</span>(fibonacciCython.fibonacciRec(<span class="pl-c1">5</span>)) <span class="pl-c">#se hace uso de la función fibonacciRec</span></pre></div>
 
 <h3>
 <a id="compilación-de-cc-para-el-uso-con-python" class="anchor" href="#compilaci%C3%B3n-de-cc-para-el-uso-con-python" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compilación de C/C++ para el uso con Python</h3>
 
-<h4>
-<a id="una-vez-creado-el-archivo-cc-con-las-funciones-que-se-quieran-usar-en-python-especificadas-para-que-se-vinculen-externamente-podemos-proceder-a-compilarlo" class="anchor" href="#una-vez-creado-el-archivo-cc-con-las-funciones-que-se-quieran-usar-en-python-especificadas-para-que-se-vinculen-externamente-podemos-proceder-a-compilarlo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Una vez creado el archivo C/C++ con las funciones que se quieran usar en Python especificadas para que se vinculen externamente, podemos proceder a compilarlo:</h4>
+<p>Una vez creado el archivo C/C++ con las funciones que se quieran usar en Python especificadas para que se vinculen externamente, podemos proceder a compilarlo:</p>
 
-<pre><code>g++ -c -fPIC fibonacci.cpp -o fibonacci.o
-g++ -shared -Wl,-soname,libfibonacci.so -o libfibonacci.so  fibonacci.o
+<pre><code>    g++ -c -fPIC fibonacci.cpp -o fibonacci.o
+    g++ -shared -Wl,-soname,libfibonacci.so -o libfibonacci.so  fibonacci.o
 </code></pre>
 
 <p>Con esto hemos creado el archivo .so necesario para trabajar en Python.</p>
@@ -180,32 +185,73 @@ g++ -shared -Wl,-soname,libfibonacci.so -o libfibonacci.so  fibonacci.o
 <h3>
 <a id="uso-de-cc-en-python" class="anchor" href="#uso-de-cc-en-python" aria-hidden="true"><span class="octicon octicon-link"></span></a>Uso de C/C++ en Python</h3>
 
-<h4>
-<a id="una-vez-generado-el-archivo-so-en-nuestro-caso-libfibonacciso-podemos-usar-las-funciones-externalizadas-de-la-siguiente-manera" class="anchor" href="#una-vez-generado-el-archivo-so-en-nuestro-caso-libfibonacciso-podemos-usar-las-funciones-externalizadas-de-la-siguiente-manera" aria-hidden="true"><span class="octicon octicon-link"></span></a>Una vez generado el archivo .so, en nuestro caso libfibonacci.so, podemos usar las funciones externalizadas de la siguiente manera:</h4>
+<p>Una vez generado el archivo .so, en nuestro caso libfibonacci.so, podemos usar las funciones externalizadas de la siguiente manera:</p>
 
-<pre><code>from ctypes import cdll #importamos cdll para cargar bibliotecas de C/C++
-libfi = cdll.LoadLibrary('./libfibonacci.so') #cargamos la biblioteca en libfi
-print(libfi.fibonacciRecC(5)) #usamos las funciones de dicha biblioteca
-</code></pre>
+<div class="highlight highlight-source-python"><pre>    <span class="pl-k">from</span> ctypes <span class="pl-k">import</span> cdll <span class="pl-c">#importamos cdll para cargar bibliotecas de C/C++</span>
+    libfi <span class="pl-k">=</span> cdll.LoadLibrary(<span class="pl-s"><span class="pl-pds">'</span>./libfibonacci.so<span class="pl-pds">'</span></span>) <span class="pl-c">#cargamos la biblioteca en libfi</span>
+    <span class="pl-k">print</span>(libfi.fibonacciRecC(<span class="pl-c1">5</span>)) <span class="pl-c">#usamos las funciones de dicha biblioteca</span></pre></div>
 
 <h2>
 <a id="comparativa-de-funciones" class="anchor" href="#comparativa-de-funciones" aria-hidden="true"><span class="octicon octicon-link"></span></a>Comparativa de funciones</h2>
 
-<h4>
-<a id="para-saber-si-cython-realmente-merece-la-pena-hemos-comparado-los-tiempos-de-ejecución-para-distintos-tamaños-de-n" class="anchor" href="#para-saber-si-cython-realmente-merece-la-pena-hemos-comparado-los-tiempos-de-ejecuci%C3%B3n-para-distintos-tama%C3%B1os-de-n" aria-hidden="true"><span class="octicon octicon-link"></span></a>Para saber si Cython realmente merece la pena, hemos comparado los tiempos de ejecución para distintos tamaños de n:</h4>
+<p>Para saber si Cython realmente merece la pena, hemos comparado los tiempos de ejecución para distintos tamaños de n:</p>
 
-<pre><code>| N  | Python   | Cython   | C/C++   |
-|----|----------|----------|---------|
-| 39 | 29.1104  | 18.1274  | 0.8510  |
-| 40 | 47.2322  | 29.4395  | 1.4826  |
-| 41 | 76.4090  | 47.3236  | 2.4527  |
-| 42 | 123.7818 | 75.5095  | 3.8937  |
-| 43 | 202.2534 | 123.7621 | 6.1991  |
-| 44 | 327.2314 | 199.7456 | 9.9453  |
-| 45 | 529.8116 | 364.6818 | 15.9019 |
-</code></pre>
+<table>
+<thead>
+<tr>
+<th>N</th>
+<th>Python</th>
+<th>Cython</th>
+<th>C/C++</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>39</td>
+<td>29.1104</td>
+<td>18.1274</td>
+<td>0.8510</td>
+</tr>
+<tr>
+<td>40</td>
+<td>47.2322</td>
+<td>29.4395</td>
+<td>1.4826</td>
+</tr>
+<tr>
+<td>41</td>
+<td>76.4090</td>
+<td>47.3236</td>
+<td>2.4527</td>
+</tr>
+<tr>
+<td>42</td>
+<td>123.7818</td>
+<td>75.5095</td>
+<td>3.8937</td>
+</tr>
+<tr>
+<td>43</td>
+<td>202.2534</td>
+<td>123.7621</td>
+<td>6.1991</td>
+</tr>
+<tr>
+<td>44</td>
+<td>327.2314</td>
+<td>199.7456</td>
+<td>9.9453</td>
+</tr>
+<tr>
+<td>45</td>
+<td>529.8116</td>
+<td>364.6818</td>
+<td>15.9019</td>
+</tr>
+</tbody>
+</table>
 
-<p><img src="https://github.com/kcobos/Cython/blob/master/comparativa.png" alt="Gráfico"></p>
+<p><img src="https://github.com/kcobos/Cython/raw/master/comparativa.png" alt="Gráfico"></p>
 
 <h2>
 <a id="para-terminar" class="anchor" href="#para-terminar" aria-hidden="true"><span class="octicon octicon-link"></span></a>Para terminar</h2>
@@ -215,13 +261,12 @@ print(libfi.fibonacciRecC(5)) #usamos las funciones de dicha biblioteca
 <h4>
 <a id="cythoncpyx" class="anchor" href="#cythoncpyx" aria-hidden="true"><span class="octicon octicon-link"></span></a>cythonC.pyx</h4>
 
-<pre><code>from libc.stdlib cimport atoi
-cdef parse_charptr_to_py_int(char* s):
-    assert s is not NULL, "string is NULL"
-    return atoi(s)
-def string_to_int(n):
-    return parse_charptr_to_py_int(n)
-</code></pre>
+<div class="highlight highlight-source-python"><pre>    <span class="pl-k">from</span> libc.stdlib cimport atoi
+    cdef parse_charptr_to_py_int(char<span class="pl-k">*</span> s):
+        <span class="pl-k">assert</span> s <span class="pl-k">is</span> <span class="pl-k">not</span> NULL, <span class="pl-s"><span class="pl-pds">"</span>string is NULL<span class="pl-pds">"</span></span>
+        <span class="pl-k">return</span> atoi(s)
+    <span class="pl-k">def</span> <span class="pl-en">string_to_int</span>(<span class="pl-smi">n</span>):
+        <span class="pl-k">return</span> parse_charptr_to_py_int(n)</pre></div>
 
 <p>Usándose de igual manera que un .pyx normal.</p>
 
@@ -233,15 +278,18 @@ def string_to_int(n):
 <li><a href="http://docs.cython.org/src/userguide/language_basics.html">http://docs.cython.org/src/userguide/language_basics.html</a></li>
 <li><a href="http://docs.cython.org/src/userguide/wrapping_CPlusPlus.html">http://docs.cython.org/src/userguide/wrapping_CPlusPlus.html</a></li>
 </ul>
+      </section>
+    </div>
 
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/kcobos/Cython">Cython</a> is maintained by <a href="https://github.com/kcobos">kcobos</a>.</span>
-
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Cython maintained by <a href="https://github.com/kcobos">kcobos</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
       </footer>
+    </div>
 
-    </section>
+    
 
-  
   </body>
 </html>
