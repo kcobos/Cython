@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Cython : Comparativa de Cython y primeros pasos">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Cython</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/kcobos/Cython">View on GitHub</a>
+
+          <h1 id="project_title">Cython</h1>
+          <h2 id="project_tagline">Comparativa de Cython y primeros pasos</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/kcobos/Cython/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/kcobos/Cython/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="cython" class="anchor" href="#cython" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cython</h1>
+
+<h2>
+<a id="qué-es-cython" class="anchor" href="#qu%C3%A9-es-cython" aria-hidden="true"><span class="octicon octicon-link"></span></a>¿Qué es Cython?</h2>
+
+<p>Es un compilador basado en Pyrex.
+Permite crear funciones en Python y compilarlas en lenguaje objeto.
+También permite hacer llamadas a funciones de C/C++.</p>
+
+<h2>
+<a id="qué-ventajas-tiene" class="anchor" href="#qu%C3%A9-ventajas-tiene" aria-hidden="true"><span class="octicon octicon-link"></span></a>¿Qué ventajas tiene?</h2>
+
+<p>Al compilar en lenguaje objeto funciones, éstas no se tienen que interpretar para ejecutarse por lo que ganamos velocidad en la ejecución de un programa.
+También podemos encapsular una aplicación hecha en C/C++ para, por ejemplo, desde Python hacerle una interfaz o pasarle datos obtenidos desde internet.</p>
+
+<h2>
+<a id="instalación" class="anchor" href="#instalaci%C3%B3n" aria-hidden="true"><span class="octicon octicon-link"></span></a>Instalación</h2>
+
+<h3>
+<a id="linux" class="anchor" href="#linux" aria-hidden="true"><span class="octicon octicon-link"></span></a>Linux:</h3>
+
+<pre><code>sudo apt-get install cython libpython2.7-dev # Para Python2
+sudo apt-get install cython3 libpython3.4-dev # Para Python3
+</code></pre>
+
+<h3>
+<a id="windows" class="anchor" href="#windows" aria-hidden="true"><span class="octicon octicon-link"></span></a>Windows:</h3>
+
+<pre><code>Existen múltiples opciones 
+    https://github.com/cython/cython/wiki/InstallingOnWindows
+</code></pre>
+
+<h2>
+<a id="un-ejemplo-simple" class="anchor" href="#un-ejemplo-simple" aria-hidden="true"><span class="octicon octicon-link"></span></a>Un ejemplo simple</h2>
+
+<p>Para empezar vamos a hacer un ejemplo simple como puede ser la sucesión de Fibonacci de forma recursiva.
+Vamos a crear una función de Fibonacci de tres maneras diferentes:
+En Python normal
+En Cython (Python compilado)
+En C/C++
+Por último vamos a hacer una comparación de tiempos entre las distintas funciones.</p>
+
+<h3>
+<a id="creación-de-ficheros" class="anchor" href="#creaci%C3%B3n-de-ficheros" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creación de ficheros</h3>
+
+<h4>
+<a id="fibonaccipythonpy-python-normal" class="anchor" href="#fibonaccipythonpy-python-normal" aria-hidden="true"><span class="octicon octicon-link"></span></a>fibonacciPython.py (Python normal)</h4>
+
+<p>def fibonacciRec(n):
+    if n==0:
+            return 0
+    elif n==1:
+        return 1
+    else:
+        return fibonacciRec(n-2) + fibonacciRec(n-1)</p>
+
+<h4>
+<a id="fibonaccicythonpyx-cython" class="anchor" href="#fibonaccicythonpyx-cython" aria-hidden="true"><span class="octicon octicon-link"></span></a>fibonacciCython.pyx (Cython)</h4>
+
+<p>def fibonacciRec(n):
+    if n==0:
+            return 0
+        elif n==1:
+            return 1
+    else:
+        return fibonacciRec(n-2) + fibonacciRec(n-1)</p>
+
+<h4>
+<a id="fibonaccicpp-cc" class="anchor" href="#fibonaccicpp-cc" aria-hidden="true"><span class="octicon octicon-link"></span></a>fibonacci.cpp (C/C++)</h4>
+
+<p>int fibonacciRec(int n){
+    if (n==0)
+            return 0;
+    else if (n==1)
+            return 1;
+    else
+            return fibonacciRec(n-2) + fibonacciRec(n-1);
+}</p>
+
+<p>extern "C" {
+    int fibonacciRecC(int n){return fibonacciRec(n);}
+}</p>
+
+<h2>
+<a id="aclaraciones" class="anchor" href="#aclaraciones" aria-hidden="true"><span class="octicon octicon-link"></span></a>Aclaraciones</h2>
+
+<p>Cython tiene la misma sintaxis que Python aunque cosas nuevas. 
+Cuidado con la extensión de los archivos!!
+En C/C++, hay que especificar las funciones o las variables que tiene una vinculación externa, es decir, aquellas que queramos llamar desde Python.
+Para ello usamos el bloque “extern” donde dentro declaramos variables y funciones que se van a poder usar desde Python.</p>
+
+<h2>
+<a id="compilación-de-cython" class="anchor" href="#compilaci%C3%B3n-de-cython" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compilación de Cython</h2>
+
+<p>Una vez que tenemos los ficheros pyx (Cython) tenemos que generar su código objeto.
+Para ello necesitamos hacer uso de un script de configuración que lo que va a hacer es buscar todos los archivos con extensión pyx y va a generar su código objeto, un archivo con extensión so.
+Lo único que tenemos que hacer es llamar a dicho script de la siguiente manera:
+    python setup.py build_ext --inplace #Python2
+    python3 setup.py build_ext --inplace #Python3</p>
+
+<h3>
+<a id="script-de-configuración" class="anchor" href="#script-de-configuraci%C3%B3n" aria-hidden="true"><span class="octicon octicon-link"></span></a>Script de configuración</h3>
+
+<p>from distutils.core import setup
+from Cython.Build import cythonize
+import glob, os
+files = []
+os.chdir(".")</p>
+
+<p>for file in glob.glob("*.pyx"):
+    files.append(file)
+setup(
+    ext_modules = cythonize(files)
+)</p>
+
+<h2>
+<a id="uso-de-cython" class="anchor" href="#uso-de-cython" aria-hidden="true"><span class="octicon octicon-link"></span></a>Uso de Cython</h2>
+
+<p>Una vez generado el código objeto, hacer uso de las funciones que haya en el fichero .pyx
+Para ello necesitamos importar el módulo y ya podemos usarlas:
+    import fibonacciCython #importa el archivo “fibonacciCython.so”
+    print(fibonacciCython.fibonacciRec(5)) #se hace uso de la función fibonacciRec</p>
+
+<h3>
+<a id="compilación-de-cc-para-el-uso-con-python" class="anchor" href="#compilaci%C3%B3n-de-cc-para-el-uso-con-python" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compilación de C/C++ para el uso con Python</h3>
+
+<p>Una vez creado el archivo C/C++ con las funciones que se quieran usar en Python especificadas para que se vinculen externamente, podemos proceder a compilarlo:
+    g++ -c -fPIC fibonacci.cpp -o fibonacci.o
+    g++ -shared -Wl,-soname,libfibonacci.so -o libfibonacci.so  fibonacci.o
+Con esto hemos creado el archivo .so necesario para trabajar en Python.</p>
+
+<h3>
+<a id="uso-de-cc-en-python" class="anchor" href="#uso-de-cc-en-python" aria-hidden="true"><span class="octicon octicon-link"></span></a>Uso de C/C++ en Python</h3>
+
+<p>Una vez generado el archivo .so, en nuestro caso libfibonacci.so, podemos usar las funciones externalizadas de la siguiente manera:
+    from ctypes import cdll #importamos cdll para cargar bibliotecas de C/C++
+    libfi = cdll.LoadLibrary('./libfibonacci.so') #cargamos la biblioteca en libfi
+print(libfi.fibonacciRecC(5)) #usamos las funciones de dicha biblioteca</p>
+
+<h2>
+<a id="comparativa-de-funciones" class="anchor" href="#comparativa-de-funciones" aria-hidden="true"><span class="octicon octicon-link"></span></a>Comparativa de funciones</h2>
+
+<p>Para saber si Cython realmente merece la pena, hemos comparado los tiempos de ejecución para distintos tamaños de n:
+| N  | Python   | Cython   | C/C++   |
+|----|----------|----------|---------|
+| 39 | 29.1104  | 18.1274  | 0.8510  |
+| 40 | 47.2322  | 29.4395  | 1.4826  |
+| 41 | 76.4090  | 47.3236  | 2.4527  |
+| 42 | 123.7818 | 75.5095  | 3.8937  |
+| 43 | 202.2534 | 123.7621 | 6.1991  |
+| 44 | 327.2314 | 199.7456 | 9.9453  |
+| 45 | 529.8116 | 364.6818 | 15.9019 |</p>
+
+<h2>
+<a id="para-terminar" class="anchor" href="#para-terminar" aria-hidden="true"><span class="octicon octicon-link"></span></a>Para terminar</h2>
+
+<p>Desde Cython se puede hacer llamadas a funciones de C/C++:
+cythonC.pyx
+    from libc.stdlib cimport atoi
+    cdef parse_charptr_to_py_int(char* s):
+        assert s is not NULL, "string is NULL"
+        return atoi(s)
+    def string_to_int(n):
+        return parse_charptr_to_py_int(n)</p>
+
+<p>Usándose de igual manera que un .pyx normal.</p>
+
+<h2>
+<a id="enlaces-de-interés" class="anchor" href="#enlaces-de-inter%C3%A9s" aria-hidden="true"><span class="octicon octicon-link"></span></a>Enlaces de interés</h2>
+
+<p><a href="http://docs.cython.org/src/tutorial/cython_tutorial.html">http://docs.cython.org/src/tutorial/cython_tutorial.html</a>
+<a href="http://docs.cython.org/src/userguide/language_basics.html">http://docs.cython.org/src/userguide/language_basics.html</a>
+<a href="http://docs.cython.org/src/userguide/wrapping_CPlusPlus.html">http://docs.cython.org/src/userguide/wrapping_CPlusPlus.html</a></p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Cython maintained by <a href="https://github.com/kcobos">kcobos</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
