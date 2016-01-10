@@ -2,11 +2,14 @@
 
 ##¿Qué es Cython?
 Es un compilador basado en Pyrex.
+
 Permite crear funciones en Python y compilarlas en lenguaje objeto.
+
 También permite hacer llamadas a funciones de C/C++.
 
 ##¿Qué ventajas tiene?
 Al compilar en lenguaje objeto funciones, éstas no se tienen que interpretar para ejecutarse por lo que ganamos velocidad en la ejecución de un programa.
+
 También podemos encapsular una aplicación hecha en C/C++ para, por ejemplo, desde Python hacerle una interfaz o pasarle datos obtenidos desde internet.
 
 ##Instalación
@@ -61,14 +64,19 @@ Por último vamos a hacer una comparación de tiempos entre las distintas funcio
 
 ##Aclaraciones
 Cython tiene la misma sintaxis que Python aunque cosas nuevas. 
+
 Cuidado con la extensión de los archivos!!
+
 En C/C++, hay que especificar las funciones o las variables que tiene una vinculación externa, es decir, aquellas que queramos llamar desde Python.
+
 Para ello usamos el bloque “extern” donde dentro declaramos variables y funciones que se van a poder usar desde Python.
 
 ##Compilación de Cython 
 Una vez que tenemos los ficheros pyx (Cython) tenemos que generar su código objeto.
+
 Para ello necesitamos hacer uso de un script de configuración que lo que va a hacer es buscar todos los archivos con extensión pyx y va a generar su código objeto, un archivo con extensión so.
-Lo único que tenemos que hacer es llamar a dicho script de la siguiente manera:
+
+####Lo único que tenemos que hacer es llamar a dicho script de la siguiente manera:
 	python setup.py build_ext --inplace #Python2
 	python3 setup.py build_ext --inplace #Python3
 
@@ -88,24 +96,24 @@ Lo único que tenemos que hacer es llamar a dicho script de la siguiente manera:
 
 ##Uso de Cython
 Una vez generado el código objeto, hacer uso de las funciones que haya en el fichero .pyx
-####Para ello necesitamos importar el módulo y ya podemos usarlas
+####Para ello necesitamos importar el módulo y ya podemos usarlas:
 	import fibonacciCython #importa el archivo “fibonacciCython.so”
 	print(fibonacciCython.fibonacciRec(5)) #se hace uso de la función fibonacciRec
 
 ###Compilación de C/C++ para el uso con Python 
-####Una vez creado el archivo C/C++ con las funciones que se quieran usar en Python especificadas para que se vinculen externamente, podemos proceder a compilarlo
+####Una vez creado el archivo C/C++ con las funciones que se quieran usar en Python especificadas para que se vinculen externamente, podemos proceder a compilarlo:
 	g++ -c -fPIC fibonacci.cpp -o fibonacci.o
 	g++ -shared -Wl,-soname,libfibonacci.so -o libfibonacci.so  fibonacci.o
 Con esto hemos creado el archivo .so necesario para trabajar en Python.
 
 ###Uso de C/C++ en Python
-####Una vez generado el archivo .so, en nuestro caso libfibonacci.so, podemos usar las funciones externalizadas de la siguiente manera
+####Una vez generado el archivo .so, en nuestro caso libfibonacci.so, podemos usar las funciones externalizadas de la siguiente manera:
     from ctypes import cdll #importamos cdll para cargar bibliotecas de C/C++
     libfi = cdll.LoadLibrary('./libfibonacci.so') #cargamos la biblioteca en libfi
     print(libfi.fibonacciRecC(5)) #usamos las funciones de dicha biblioteca
 
 ##Comparativa de funciones
-####Para saber si Cython realmente merece la pena, hemos comparado los tiempos de ejecución para distintos tamaños de n
+####Para saber si Cython realmente merece la pena, hemos comparado los tiempos de ejecución para distintos tamaños de n:
     | N  | Python   | Cython   | C/C++   |
     |----|----------|----------|---------|
     | 39 | 29.1104  | 18.1274  | 0.8510  |
