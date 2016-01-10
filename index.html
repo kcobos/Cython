@@ -37,15 +37,18 @@
 <h2>
 <a id="qué-es-cython" class="anchor" href="#qu%C3%A9-es-cython" aria-hidden="true"><span class="octicon octicon-link"></span></a>¿Qué es Cython?</h2>
 
-<p>Es un compilador basado en Pyrex.
-Permite crear funciones en Python y compilarlas en lenguaje objeto.
-También permite hacer llamadas a funciones de C/C++.</p>
+<p>Es un compilador basado en Pyrex.</p>
+
+<p>Permite crear funciones en Python y compilarlas en lenguaje objeto.</p>
+
+<p>También permite hacer llamadas a funciones de C/C++.</p>
 
 <h2>
 <a id="qué-ventajas-tiene" class="anchor" href="#qu%C3%A9-ventajas-tiene" aria-hidden="true"><span class="octicon octicon-link"></span></a>¿Qué ventajas tiene?</h2>
 
-<p>Al compilar en lenguaje objeto funciones, éstas no se tienen que interpretar para ejecutarse por lo que ganamos velocidad en la ejecución de un programa.
-También podemos encapsular una aplicación hecha en C/C++ para, por ejemplo, desde Python hacerle una interfaz o pasarle datos obtenidos desde internet.</p>
+<p>Al compilar en lenguaje objeto funciones, éstas no se tienen que interpretar para ejecutarse por lo que ganamos velocidad en la ejecución de un programa.</p>
+
+<p>También podemos encapsular una aplicación hecha en C/C++ para, por ejemplo, desde Python hacerle una interfaz o pasarle datos obtenidos desde internet.</p>
 
 <h2>
 <a id="instalación" class="anchor" href="#instalaci%C3%B3n" aria-hidden="true"><span class="octicon octicon-link"></span></a>Instalación</h2>
@@ -124,19 +127,27 @@ extern "C" {
 <h2>
 <a id="aclaraciones" class="anchor" href="#aclaraciones" aria-hidden="true"><span class="octicon octicon-link"></span></a>Aclaraciones</h2>
 
-<p>Cython tiene la misma sintaxis que Python aunque cosas nuevas. 
-Cuidado con la extensión de los archivos!!
-En C/C++, hay que especificar las funciones o las variables que tiene una vinculación externa, es decir, aquellas que queramos llamar desde Python.
-Para ello usamos el bloque “extern” donde dentro declaramos variables y funciones que se van a poder usar desde Python.</p>
+<p>Cython tiene la misma sintaxis que Python aunque cosas nuevas. </p>
+
+<p>Cuidado con la extensión de los archivos!!</p>
+
+<p>En C/C++, hay que especificar las funciones o las variables que tiene una vinculación externa, es decir, aquellas que queramos llamar desde Python.</p>
+
+<p>Para ello usamos el bloque “extern” donde dentro declaramos variables y funciones que se van a poder usar desde Python.</p>
 
 <h2>
 <a id="compilación-de-cython" class="anchor" href="#compilaci%C3%B3n-de-cython" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compilación de Cython</h2>
 
-<p>Una vez que tenemos los ficheros pyx (Cython) tenemos que generar su código objeto.
-Para ello necesitamos hacer uso de un script de configuración que lo que va a hacer es buscar todos los archivos con extensión pyx y va a generar su código objeto, un archivo con extensión so.
-Lo único que tenemos que hacer es llamar a dicho script de la siguiente manera:
-    python setup.py build_ext --inplace #Python2
-    python3 setup.py build_ext --inplace #Python3</p>
+<p>Una vez que tenemos los ficheros pyx (Cython) tenemos que generar su código objeto.</p>
+
+<p>Para ello necesitamos hacer uso de un script de configuración que lo que va a hacer es buscar todos los archivos con extensión pyx y va a generar su código objeto, un archivo con extensión so.</p>
+
+<h4>
+<a id="lo-único-que-tenemos-que-hacer-es-llamar-a-dicho-script-de-la-siguiente-manera" class="anchor" href="#lo-%C3%BAnico-que-tenemos-que-hacer-es-llamar-a-dicho-script-de-la-siguiente-manera" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lo único que tenemos que hacer es llamar a dicho script de la siguiente manera:</h4>
+
+<pre><code>python setup.py build_ext --inplace #Python2
+python3 setup.py build_ext --inplace #Python3
+</code></pre>
 
 <h3>
 <a id="script-de-configuración" class="anchor" href="#script-de-configuraci%C3%B3n" aria-hidden="true"><span class="octicon octicon-link"></span></a>Script de configuración</h3>
@@ -161,7 +172,7 @@ setup(
 <p>Una vez generado el código objeto, hacer uso de las funciones que haya en el fichero .pyx</p>
 
 <h4>
-<a id="para-ello-necesitamos-importar-el-módulo-y-ya-podemos-usarlas" class="anchor" href="#para-ello-necesitamos-importar-el-m%C3%B3dulo-y-ya-podemos-usarlas" aria-hidden="true"><span class="octicon octicon-link"></span></a>Para ello necesitamos importar el módulo y ya podemos usarlas</h4>
+<a id="para-ello-necesitamos-importar-el-módulo-y-ya-podemos-usarlas" class="anchor" href="#para-ello-necesitamos-importar-el-m%C3%B3dulo-y-ya-podemos-usarlas" aria-hidden="true"><span class="octicon octicon-link"></span></a>Para ello necesitamos importar el módulo y ya podemos usarlas:</h4>
 
 <pre><code>import fibonacciCython #importa el archivo “fibonacciCython.so”
 print(fibonacciCython.fibonacciRec(5)) #se hace uso de la función fibonacciRec
@@ -171,7 +182,7 @@ print(fibonacciCython.fibonacciRec(5)) #se hace uso de la función fibonacciRec
 <a id="compilación-de-cc-para-el-uso-con-python" class="anchor" href="#compilaci%C3%B3n-de-cc-para-el-uso-con-python" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compilación de C/C++ para el uso con Python</h3>
 
 <h4>
-<a id="una-vez-creado-el-archivo-cc-con-las-funciones-que-se-quieran-usar-en-python-especificadas-para-que-se-vinculen-externamente-podemos-proceder-a-compilarlo" class="anchor" href="#una-vez-creado-el-archivo-cc-con-las-funciones-que-se-quieran-usar-en-python-especificadas-para-que-se-vinculen-externamente-podemos-proceder-a-compilarlo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Una vez creado el archivo C/C++ con las funciones que se quieran usar en Python especificadas para que se vinculen externamente, podemos proceder a compilarlo</h4>
+<a id="una-vez-creado-el-archivo-cc-con-las-funciones-que-se-quieran-usar-en-python-especificadas-para-que-se-vinculen-externamente-podemos-proceder-a-compilarlo" class="anchor" href="#una-vez-creado-el-archivo-cc-con-las-funciones-que-se-quieran-usar-en-python-especificadas-para-que-se-vinculen-externamente-podemos-proceder-a-compilarlo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Una vez creado el archivo C/C++ con las funciones que se quieran usar en Python especificadas para que se vinculen externamente, podemos proceder a compilarlo:</h4>
 
 <pre><code>g++ -c -fPIC fibonacci.cpp -o fibonacci.o
 g++ -shared -Wl,-soname,libfibonacci.so -o libfibonacci.so  fibonacci.o
@@ -183,7 +194,7 @@ g++ -shared -Wl,-soname,libfibonacci.so -o libfibonacci.so  fibonacci.o
 <a id="uso-de-cc-en-python" class="anchor" href="#uso-de-cc-en-python" aria-hidden="true"><span class="octicon octicon-link"></span></a>Uso de C/C++ en Python</h3>
 
 <h4>
-<a id="una-vez-generado-el-archivo-so-en-nuestro-caso-libfibonacciso-podemos-usar-las-funciones-externalizadas-de-la-siguiente-manera" class="anchor" href="#una-vez-generado-el-archivo-so-en-nuestro-caso-libfibonacciso-podemos-usar-las-funciones-externalizadas-de-la-siguiente-manera" aria-hidden="true"><span class="octicon octicon-link"></span></a>Una vez generado el archivo .so, en nuestro caso libfibonacci.so, podemos usar las funciones externalizadas de la siguiente manera</h4>
+<a id="una-vez-generado-el-archivo-so-en-nuestro-caso-libfibonacciso-podemos-usar-las-funciones-externalizadas-de-la-siguiente-manera" class="anchor" href="#una-vez-generado-el-archivo-so-en-nuestro-caso-libfibonacciso-podemos-usar-las-funciones-externalizadas-de-la-siguiente-manera" aria-hidden="true"><span class="octicon octicon-link"></span></a>Una vez generado el archivo .so, en nuestro caso libfibonacci.so, podemos usar las funciones externalizadas de la siguiente manera:</h4>
 
 <pre><code>from ctypes import cdll #importamos cdll para cargar bibliotecas de C/C++
 libfi = cdll.LoadLibrary('./libfibonacci.so') #cargamos la biblioteca en libfi
@@ -194,7 +205,7 @@ print(libfi.fibonacciRecC(5)) #usamos las funciones de dicha biblioteca
 <a id="comparativa-de-funciones" class="anchor" href="#comparativa-de-funciones" aria-hidden="true"><span class="octicon octicon-link"></span></a>Comparativa de funciones</h2>
 
 <h4>
-<a id="para-saber-si-cython-realmente-merece-la-pena-hemos-comparado-los-tiempos-de-ejecución-para-distintos-tamaños-de-n" class="anchor" href="#para-saber-si-cython-realmente-merece-la-pena-hemos-comparado-los-tiempos-de-ejecuci%C3%B3n-para-distintos-tama%C3%B1os-de-n" aria-hidden="true"><span class="octicon octicon-link"></span></a>Para saber si Cython realmente merece la pena, hemos comparado los tiempos de ejecución para distintos tamaños de n</h4>
+<a id="para-saber-si-cython-realmente-merece-la-pena-hemos-comparado-los-tiempos-de-ejecución-para-distintos-tamaños-de-n" class="anchor" href="#para-saber-si-cython-realmente-merece-la-pena-hemos-comparado-los-tiempos-de-ejecuci%C3%B3n-para-distintos-tama%C3%B1os-de-n" aria-hidden="true"><span class="octicon octicon-link"></span></a>Para saber si Cython realmente merece la pena, hemos comparado los tiempos de ejecución para distintos tamaños de n:</h4>
 
 <pre><code>| N  | Python   | Cython   | C/C++   |
 |----|----------|----------|---------|
